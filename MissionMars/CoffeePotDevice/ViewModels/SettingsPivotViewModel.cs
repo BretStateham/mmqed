@@ -43,12 +43,12 @@ namespace CoffeePotDevice.ViewModels
       }
     }
 
-    public string CoffePotDeviceKey
+    public string CoffePotDeviceConnectionString
     {
-      get { return _settings.CoffePotDeviceKey; }
+      get { return _settings.CoffePotDeviceConnectionString; }
       set
       {
-        _settings.CoffePotDeviceKey = value;
+        _settings.CoffePotDeviceConnectionString = value;
         base.RaisePropertyChanged();
       }
     }
@@ -57,7 +57,7 @@ namespace CoffeePotDevice.ViewModels
     {
       RaisePropertyChanged(nameof(IoTHubManagementConnectionString));
       RaisePropertyChanged(nameof(CoffePotDeviceId));
-      RaisePropertyChanged(nameof(CoffePotDeviceKey));
+      RaisePropertyChanged(nameof(CoffePotDeviceConnectionString));
     }
   }
 

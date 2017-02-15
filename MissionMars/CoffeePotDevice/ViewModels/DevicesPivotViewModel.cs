@@ -77,8 +77,6 @@ namespace CoffeePotDevice.ViewModels
       }
     }
 
-    #region Devices Data
-
     public List<DeviceEntity> devices;
     public List<DeviceEntity> Devices
     {
@@ -119,10 +117,6 @@ namespace CoffeePotDevice.ViewModels
         Devices = await IoTHubRegistryService.GetDevices(conString, "");
       }
     }
-
-    #endregion Devices Data
-
-    #region Device Popup
 
     private bool deviceDialogIsOpen;
 
@@ -258,7 +252,7 @@ namespace CoffeePotDevice.ViewModels
       entangleDeviceCommand ?? (
         entangleDeviceCommand = new DelegateCommand(() => {
           _settings.CoffePotDeviceId = SelectedDevice.Id;
-          _settings.CoffePotDeviceKey = SelectedDevice.PrimaryKey;
+          _settings.CoffePotDeviceConnectionString = SelectedDevice.ConnectionString;
         }, 
         () => SelectedDevice != null)
       );
@@ -285,8 +279,6 @@ namespace CoffeePotDevice.ViewModels
           EditDevice = null;
         }, () => true)
       );
-
-    #endregion Device Popup
 
 
   }

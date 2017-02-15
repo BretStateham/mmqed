@@ -111,7 +111,7 @@
                      Style="{StaticResource MissionMarsDataEntryTextBox}"/>
 
             <TextBlock
-              Text='Entangled Device Settings - Set from the "Manage Devices" page'
+              Text='Quantum Entangled Coffee Pot Device Settings - Set from the "Manage Devices" page'
               Style="{StaticResource MissionMarsDataHeadingTextBlock}"
               Margin="10"
               HorizontalAlignment="Stretch" TextAlignment="Center"
@@ -132,20 +132,21 @@
               VerticalAlignment="Center"
               Style="{StaticResource MissionMarsDataDetailTextBlock}"/>
 
-            <TextBlock x:Name="CoffePotDeviceKeyHeader"
+            <TextBlock x:Name="CoffePotDeviceConnectionStringHeader"
                  Grid.Row ="4" Grid.Column="0"
-                 Text="Coffee Pot Device Key:"
+                 Text="Coffee Pot Device Connection String:"
                  TextWrapping="Wrap"
                  Margin="10"
                  Style="{StaticResource MissionMarsDataHeadingTextBlock}" 
                  VerticalAlignment="Center"/>
 
             <TextBlock 
-              x:Name="CoffeePotDeviceKey"
-              Text="{Binding CoffePotDeviceKey, Mode=OneWay}"
+              x:Name="CoffeePotDeviceConnectionString"
+              Text="{Binding CoffePotDeviceConnectionString, Mode=OneWay}"
               Grid.Row="4" Grid.Column="1"
               Margin="10"
               VerticalAlignment="Center"
+              TextWrapping="Wrap"
               Style="{StaticResource MissionMarsDataDetailTextBlock}"/>
           </Grid>
 

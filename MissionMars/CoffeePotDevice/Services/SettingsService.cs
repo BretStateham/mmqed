@@ -45,12 +45,12 @@ namespace CoffeePotDevice.Services
       }
     }
 
-    public string CoffePotDeviceKey
+    public string CoffePotDeviceConnectionString
     {
-      get { return _helper.Read<string>(nameof(CoffePotDeviceKey), ""); }
+      get { return _helper.Read<string>(nameof(CoffePotDeviceConnectionString), ""); }
       set
       {
-        _helper.Write(nameof(CoffePotDeviceKey), value);
+        _helper.Write(nameof(CoffePotDeviceConnectionString), value);
         RaisePropertyChanged();
         NotifySettingsChanged();
       }

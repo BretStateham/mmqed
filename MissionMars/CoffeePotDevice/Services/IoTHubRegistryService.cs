@@ -15,16 +15,6 @@ namespace CoffeePotDevice.Services
   public static class IoTHubRegistryService
   {
 
-    //private static List<DeviceEntity> listOfDevices;
-
-    //static ISerializationService serializationService;
-
-    //private static RegistryManager registryManager;
-    //private static int maxCountOfDevices;
-    //private static String protocolGatewayHostName;
-
-
-    //private static string iotHubConnectionString;
     public static String GenerateDeviceId(string IdPrefix)
     {
       return $"{IdPrefix}{Guid.NewGuid().ToString("N")}";
@@ -136,11 +126,6 @@ namespace CoffeePotDevice.Services
       }
 
       return outputDeviceEntity;
-    }
-
-    static IoTHubRegistryService()
-    {
-      //serializationService = SerializationService.Json;
     }
 
     public static async Task<List<DeviceEntity>> GetDevices(string iotHubManagementConnectionString, string protocolGatewayHostName)
