@@ -9,11 +9,21 @@ using CoffeePotDevice.Services;
 using CoffeePotDevice.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Windows.UI.ViewManagement;
 
 namespace CoffeePotDevice.ViewModels
 {
   public class MainPageViewModel : ViewModelBase
   {
+
+    private Models.FullScreenStates fullScreenState;
+
+    public Models.FullScreenStates FullScreenState
+    {
+      get { return fullScreenState; }
+      set { Set(ref fullScreenState, value); }
+    }
+
 
     private SettingsService _settings;
 
@@ -67,6 +77,25 @@ namespace CoffeePotDevice.ViewModels
       RaisePropertyChanged();
     }
 
+    DelegateCommand toggleFullScreenCommand;
+    public DelegateCommand ToggleFullScreenCommand =>
+      toggleFullScreenCommand ?? (
+        toggleFullScreenCommand = new DelegateCommand(() => 
+        {
+          ApplicationView currentView = ApplicationView.GetForCurrentView();
+          if (currentView.IsFullScreenMode)
+          {
+            currentView.ExitFullScreenMode();
+          }
+          else
+          {
+            currentView.TryEnterFullScreenMode();
+          }
+          UpdateFullScreenStateProperty();
+        }, 
+          () => true)
+      );
+
     #region Play Sounds
 
     DelegateCommand<String> playSoundCommand;
@@ -101,9 +130,16 @@ namespace CoffeePotDevice.ViewModels
       }
     }
 
+    private void UpdateFullScreenStateProperty()
+    {
+      FullScreenState = ApplicationView.GetForCurrentView().IsFullScreenMode ? FullScreenStates.Expanded : FullScreenStates.Collapsed;
+
+    }
+
     public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
     {
       await InitIoTHubDeviceService();
+      UpdateFullScreenStateProperty();
       Rebind();
     }
 
@@ -150,13 +186,15 @@ namespace CoffeePotDevice.ViewModels
     private async void IotHubDeviceService_MessageReceived(object sender, Models.MessageEventArgs e)
     {
       MessagesReceived.Insert(0, e.MessageString);
-      Debug.WriteLine(String.Format("Received message: {0}", e.MessageString));
+      //Debug.WriteLine(String.Format("Received message: {0}", e.MessageString));
     }
 
     private async void IotHubDeviceService_BadMessageReceived(object sender, Models.MessageEventArgs e)
     {
       await SoundService.PlayAudioFileAsync("allyourbase.wav");
-      Debug.WriteLine(String.Format("Received Bad message: {0}", e.MessageString));
+      string msg = String.Format("Malformed message received: {0}", e.MessageString);
+      //Debug.WriteLine(msg);
+      SendDeviceMessage("unknown", e.Message.MessageId, msg);
     }
 
     private async void IotHubDeviceService_UnknownCommandReceived(object sender, Models.CommandEventArgs e)
@@ -169,14 +207,14 @@ namespace CoffeePotDevice.ViewModels
     private async void IotHubDeviceService_PingCommandReceived(object sender, Models.PingCommandEventArgs e)
     {
       await SoundService.PlayAudioFileAsync("ping.wav");
-      string msg = String.Format("Ping Response: {0}", e.Payload);
+      string msg = String.Format("Ping response for {0}: {1}", e.CommandMessage.Team, e.Payload);
       SendDeviceMessage(e.CommandMessage.Team, e.Message.MessageId, msg);
     }
 
     private async void IotHubDeviceService_BrewCommandReceived(object sender, Models.BrewCommandEventArgs e)
     {
       await SoundService.PlayAudioFileAsync("brew.wav");
-      string msg = "Brewing Coffee!";
+      string msg = String.Format("Brewing Coffee for {0}: {1}",e.CommandMessage.Team, e.Payload);
       SendDeviceMessage(e.CommandMessage.Team, e.Message.MessageId, msg);
     }
 

@@ -12,10 +12,13 @@ namespace CoffeePotDevice.Models
 
     public CloudToDeviceMessage CommandMessage { get; set; }
 
-    public CommandEventArgs(Message Message, byte[] MessageBytes, string MessageString, CloudToDeviceMessage CommandMessage) 
+    public string Payload { get; set; }
+
+    public CommandEventArgs(Message Message, byte[] MessageBytes, string MessageString, CloudToDeviceMessage CommandMessage, string Payload) 
       : base(Message,MessageBytes,MessageString)
     {
       this.CommandMessage = CommandMessage;
+      this.Payload = Payload;
     }
   }
 }

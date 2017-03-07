@@ -23,6 +23,7 @@ namespace CoffeePotDevice.Services
       var stream = await mediaFile.OpenAsync(FileAccessMode.Read).AsTask();
       var mediaControl = new MediaElement() { IsLooping = looping };
       mediaControl.SetSource(stream, mediaFile.ContentType);
+      mediaControl.Volume = .5;
       mediaControl.Play();
     }
   }

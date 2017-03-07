@@ -9,8 +9,8 @@ namespace CoffeePotDevice.Models
 {
   public class BrewCommandEventArgs : CommandEventArgs
   {
-    public BrewCommandEventArgs(Message Message, byte[] MessageBytes, string MessageString, CloudToDeviceMessage CommandMessage)
-      : base(Message, MessageBytes, MessageString, CommandMessage)
+    public BrewCommandEventArgs(Message Message, byte[] MessageBytes, string MessageString, CloudToDeviceMessage CommandMessage, string Payload)
+      : base(Message, MessageBytes, MessageString, CommandMessage, Payload)
     {}
   }
 }

@@ -9,12 +9,8 @@ namespace CoffeePotDevice.Models
 {
   public class PingCommandEventArgs : CommandEventArgs
   {
-    public string Payload { get; set; }
-
     public PingCommandEventArgs(Message Message, byte[] MessageBytes, string MessageString, CloudToDeviceMessage CommandMessage, string Payload)
-      : base(Message, MessageBytes, MessageString, CommandMessage)
-    {
-      this.Payload = Payload;
-    }
+      : base(Message, MessageBytes, MessageString, CommandMessage, Payload)
+    {    }
   }
 }

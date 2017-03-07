@@ -134,14 +134,14 @@ namespace CoffeePotDevice.Services
         if (commandMessage != null)
         {
           string commandString = commandMessage.Command.Trim().ToLower();
-          switch(commandString)
+          string payload = commandMessage.Parameters;
+          switch (commandString)
           {
             case "ping":
-              string payload = commandMessage.Parameters;
               PingCommandReceived?.Invoke(null, new PingCommandEventArgs(receivedMessage, messageBytes, messageString, commandMessage, payload));
               break;
             case "brew":
-              BrewCommandReceived?.Invoke(null, new BrewCommandEventArgs(receivedMessage, messageBytes, messageString, commandMessage));
+              BrewCommandReceived?.Invoke(null, new BrewCommandEventArgs(receivedMessage, messageBytes, messageString, commandMessage, payload));
               break;
             //case "takepicture":
             //  int camera;
@@ -169,7 +169,7 @@ namespace CoffeePotDevice.Services
             default:
               // Send a generic event about the message being received
               //NotifyMessageReceived(receivedMessage, messageBytes, messageString);
-              UnknownCommandReceived?.Invoke(null, new CommandEventArgs(receivedMessage, messageBytes, messageString, commandMessage));
+              UnknownCommandReceived?.Invoke(null, new CommandEventArgs(receivedMessage, messageBytes, messageString, commandMessage, payload));
               break;
           }
         } else

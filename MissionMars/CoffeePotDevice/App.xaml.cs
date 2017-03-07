@@ -15,17 +15,13 @@ namespace CoffeePotDevice
     public App()
     {
       InitializeComponent();
-      RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Light;
-      //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-      //ApplicationData.Current.ClearAsync().AsTask().Wait();
+      RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Dark;
     }
 
     public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
     {
       // TODO: add your long-running task here
       await NavigationService.NavigateAsync(typeof(Views.MainPage));
-      var view = ApplicationView.GetForCurrentView();
-      view.TryEnterFullScreenMode();
     }
   }
 }
